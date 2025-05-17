@@ -1,4 +1,4 @@
-from prompt.prompt import example_to_message
+from prompt.few_shot import example_to_message
 
 SYSTEM_PROMPT = """
 ## **역할**
@@ -23,8 +23,7 @@ def build_message(
         few_shot_examples: list[dict]
 ) -> list[dict]:
     # system prompt
-    message = [
-        {"role": "system", "content": SYSTEM_PROMPT}] 
+    message = [{"role": "system", "content": SYSTEM_PROMPT}] 
         
     # few shot example
     few_shot = example_to_message(few_shot_examples)

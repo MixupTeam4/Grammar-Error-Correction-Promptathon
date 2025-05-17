@@ -2,6 +2,8 @@ import time
 import pandas as pd
 from tqdm import tqdm
 import concurrent.futures
+
+from prompt.few_shot import FEW_SHOT_EXAMPLES
 from inference.chat import chat
 from utils.save import save_csv
 
@@ -12,16 +14,17 @@ def single(
     results = []
     for _, row in tqdm(data.iterrows(), total=len(data)):
         try:
-            result = chat(api_key, row['err_sentence'])
+            result = chat(api_key, row['err_sentence'], FEW_SHOT_EXAMPLES)
         except:
             # 429 에러 대응 로직
             success = False
             time.sleep(5)
             while success == False:
                 try:
-                    result = chat(api_key, row['err_sentence'])
+                    result = chat(api_key, row['err_sentence'], FEW_SHOT_EXAMPLES)
                     success = True
-                except:
+                except Exception as e:
+                    print(f"{e}")
                     success = False
                     time.sleep(5)
         results.append({
@@ -52,6 +55,7 @@ def multiple(
 
     # 3. 병렬 처리
     results = []
+    combined_results = pd.DataFrame()  # 초기화
     with concurrent.futures.ThreadPoolExecutor(max_workers=n_workers) as executor:
         future_to_chunk = {
             executor.submit(single, api_keys[i % len(api_keys)], chunk): i
@@ -65,7 +69,7 @@ def multiple(
                 results.append((chunk_idx, result))
             except Exception as e:
                 print(f"청크 {chunk_idx} 처리 중 오류 발생: {e}")
-                return combined_results
+                return results
     
     # 4. 결과 정렬 및 결합
     results.sort(key=lambda x: x[0])
