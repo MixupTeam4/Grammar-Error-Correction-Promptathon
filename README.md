@@ -8,8 +8,11 @@
 
 * **목표**: Solar Pro API를 활용하여 프롬프트 만으로 한국어 맞춤법 교정 성능을 개선한다. 
 * **접근 전략**:
-
-  * ex. 오류 유형별 대응 전략 수립 → 반복 실험을 통해 개선
+  1. 최종 교정된 문장만 출력-> Response format 명시
+  2. System Prompt 활용
+  4. 반복적인 오류 유형화 & 유형별 대응 전략 수립 -> Few-shot , Refine Prompting
+ 
+ 
 * **주요 실험 내용**:
 
   * 실험 진행 방식 작성
@@ -20,8 +23,8 @@
 ### 1. 사전 준비 
 
 ```bash
-git clone https://github.com/your-org/your-repo.git
-cd your-repo/experiment
+git clone https://github.com/your-org/your-repo.git](https://github.com/MixupTeam4/Grammar-Error-Correction-Promptathon.git
+cd your-repo/code
 ```
 
 ### 라이브러리 설치
@@ -33,7 +36,7 @@ pip install -r requirements.txt
 ### 실험 실행
 
 ```bash
-python run_experiment.py --input sample_input.txt --output result.json
+python main.py
 ```
 
 > 📎 실행 옵션 (예시):
