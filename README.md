@@ -23,7 +23,7 @@
 ### 1. 사전 준비 
 
 ```bash
-git clone https://github.com/MixupTeam4/Grammar-Error-Correction-Promptathon.git](https://github.com/MixupTeam4/Grammar-Error-Correction-Promptathon.git
+git clone https://github.com/MixupTeam4/Grammar-Error-Correction-Promptathon
 ```
 
 ### 라이브러리 설치
